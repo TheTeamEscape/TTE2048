@@ -39,12 +39,20 @@ public class Grid : MonoBehaviour
 
                         blocks[i, headNullY] = blocks[i, j];
                         blocks[i, j] = null;
+
+
+                        float x = blocks[i, headNullY ].transform.position.x;
+                        float y = blocks[i, headNullY ].transform.position.y;
+                        float z = blocks[i, headNullY ].transform.position.z;
+
+                        y = headNullY - 1.5f;
+                        blocks[i, headNullY].transform.position = new Vector3(x, y, z);
                         headNullY = headNullY + 1;
 
-                    }       
-                    //float x = blocks[i, j].transform.position.x;
-                    //float y = blocks[i, j].transform.position.y;
-                    //float z = blocks[i, j].transform.position.z;
+                    }
+
+
+
                 }
             }
         }
