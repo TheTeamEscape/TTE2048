@@ -19,7 +19,7 @@ public class Grid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             for (int i = 0; i < 4; ++i) {
                 int headNullY = -1;
@@ -34,16 +34,17 @@ public class Grid : MonoBehaviour
 
                         }
                     }
-                    else if (blocks is not null)
+                    else if (blocks[i, j] is not null)
                     {
 
                         blocks[i, headNullY] = blocks[i, j];
                         blocks[i, j] = null;
+                        headNullY = headNullY + 1;
 
                     }       
-                    float x = blocks[i, j].transform.position.x;
-                    float y = blocks[i, j].transform.position.y;
-                    float z = blocks[i, j].transform.position.z;
+                    //float x = blocks[i, j].transform.position.x;
+                    //float y = blocks[i, j].transform.position.y;
+                    //float z = blocks[i, j].transform.position.z;
                 }
             }
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Color : MonoBehaviour
 {
+    public float black;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +15,9 @@ public class Color : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Change(float black) {
+        this.black = black;
     }
 }
