@@ -19,6 +19,8 @@ public class Grid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool Movement = false;
+
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             for (int i = 0; i < 4; ++i) {
@@ -49,6 +51,7 @@ public class Grid : MonoBehaviour
                         blocks[i, headNullY].transform.position = new Vector3(x, y, z);
                         headNullY = headNullY + 1;
 
+                        Movement = true;
                     }
 
 
@@ -88,6 +91,7 @@ public class Grid : MonoBehaviour
                         blocks[i, headNullY].transform.position = new Vector3(x, y, z);
                         headNullY = headNullY - 1;
 
+                        Movement = true;
                     }
 
 
@@ -127,6 +131,7 @@ public class Grid : MonoBehaviour
                         blocks[headNullX, j].transform.position = new Vector3(x, y, z);
                         headNullX = headNullX - 1;
 
+                        Movement = true;
                     }
 
 
@@ -166,6 +171,9 @@ public class Grid : MonoBehaviour
                         blocks[headNullX, j].transform.position = new Vector3(x, y, z);
                         headNullX = headNullX + 1;
 
+
+                        Movement = true;
+
                     }
 
 
@@ -173,17 +181,23 @@ public class Grid : MonoBehaviour
                 }
             }
         }
+        if (Movement == true)
+        {
+            CreateBlock();
+        }
     }
 
     public void CreateBlock() {
         int LocationX;
         int LocationY;
+        do
+        {
+            LocationX = Random.Range(0, 4);
+            LocationY = Random.Range(0, 4);
 
-        LocationX = Random.Range(0, 4);
-        LocationY = Random.Range(0, 4);
+        } while (blocks[LocationX, LocationY] is not null);
 
         GameObject newBlock = Instantiate(BlockPrefab, new Vector3(LocationX - 1.5f, LocationY - 1.5f, 0f), Quaternion.identity);
-
         blocks[LocationX, LocationY] = newBlock.GetComponent<Block>();
     }
 }
