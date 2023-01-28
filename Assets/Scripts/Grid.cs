@@ -27,6 +27,11 @@ public class Grid : MonoBehaviour
                 int headNullY = -1;
                 for (int j = 0; j < 4; ++j)
                 {
+                    int finalY = j;
+                    if (blocks[i, j] is null)
+                    {
+                        finalY = -1;
+                    }
                     if (headNullY == -1)
                     {
                         if (blocks[i, j] is null)
@@ -42,7 +47,7 @@ public class Grid : MonoBehaviour
                         blocks[i, headNullY] = blocks[i, j];
                         blocks[i, j] = null;
 
-
+                        finalY = headNullY;
                         float x = blocks[i, headNullY ].transform.position.x;
                         float y = blocks[i, headNullY ].transform.position.y;
                         float z = blocks[i, headNullY ].transform.position.z;
@@ -53,7 +58,16 @@ public class Grid : MonoBehaviour
 
                         Movement = true;
                     }
-
+                    if (finalY > 0)
+                    {
+                        if (blocks[i, finalY].number.value == blocks[i, finalY - 1].number.value)
+                        {
+                            Destroy(blocks[i, finalY].gameObject);
+                            blocks[i, finalY] = null;
+                            headNullY = finalY;
+                            blocks[i, finalY - 1].number.value *= 2;
+                        }
+                    }
 
 
                 }
@@ -67,11 +81,16 @@ public class Grid : MonoBehaviour
                 int headNullY = 4;
                 for (int j = 3; j > -1; --j)
                 {
+                    int finalY = j;
+                    if (blocks[i, j] is null)
+                    {
+                        finalY = 4;
+                    }
+
                     if (headNullY == 4)
                     {
                         if (blocks[i, j] is null)
                         {
-
                             headNullY = j;
 
                         }
@@ -82,7 +101,7 @@ public class Grid : MonoBehaviour
                         blocks[i, headNullY] = blocks[i, j];
                         blocks[i, j] = null;
 
-
+                        finalY = headNullY;
                         float x = blocks[i, headNullY].transform.position.x;
                         float y = blocks[i, headNullY].transform.position.y;
                         float z = blocks[i, headNullY].transform.position.z;
@@ -93,7 +112,16 @@ public class Grid : MonoBehaviour
 
                         Movement = true;
                     }
-
+                    if (finalY < 3)
+                    {
+                        if (blocks[i, finalY].number.value == blocks[i, finalY + 1].number.value)
+                        {
+                            Destroy(blocks[i, finalY].gameObject);
+                            blocks[i, finalY] = null;
+                            headNullY = finalY;
+                            blocks[i, finalY + 1].number.value *= 2;
+                        }
+                    }
 
 
                 }
@@ -107,13 +135,18 @@ public class Grid : MonoBehaviour
                 int headNullX = 4;
                 for (int i = 3; i > -1; --i)
                 {
+                    int finalX = i;
+                    if (blocks[i, j] is null)
+                    {
+                        finalX = 4;
+                    }
+
+
                     if (headNullX == 4)
                     {
                         if (blocks[i, j] is null)
                         {
-
                             headNullX = i;
-
                         }
                     }
                     else if (blocks[i, j] is not null)
@@ -122,7 +155,7 @@ public class Grid : MonoBehaviour
                         blocks[headNullX, j] = blocks[i, j];
                         blocks[i, j] = null;
 
-
+                        finalX = headNullX;
                         float x = blocks[headNullX, j].transform.position.x;
                         float y = blocks[headNullX, j].transform.position.y;
                         float z = blocks[headNullX, j].transform.position.z;
@@ -133,6 +166,16 @@ public class Grid : MonoBehaviour
                         Movement = true;
                        
                         
+                    }
+                    if (finalX < 3)
+                    {
+                        if (blocks[finalX, j].number.value == blocks[finalX + 1, j].number.value)
+                        {
+                            Destroy(blocks[finalX, j].gameObject);
+                            blocks[finalX, j] = null;
+                            headNullX = finalX;
+                            blocks[finalX + 1, j].number.value *= 2;
+                        }
                     }
 
 
