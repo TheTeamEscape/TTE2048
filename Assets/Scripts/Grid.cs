@@ -130,8 +130,9 @@ public class Grid : MonoBehaviour
                         x = headNullX - 1.5f;
                         blocks[headNullX, j].transform.position = new Vector3(x, y, z);
                         headNullX = headNullX - 1;
-
                         Movement = true;
+                       
+                        
                     }
 
 
@@ -147,13 +148,17 @@ public class Grid : MonoBehaviour
                 int headNullX = -1;
                 for (int i = 0; i < 4; ++i)
                 {
+                    int finalX = i;
+                    if (blocks[i, j] is null) {
+                        finalX = -1;
+                    }
+
+                    
                     if (headNullX == -1)
                     {
                         if (blocks[i, j] is null)
                         {
-
                             headNullX = i;
-
                         }
                     }
                     else if (blocks[i, j] is not null)
@@ -162,7 +167,7 @@ public class Grid : MonoBehaviour
                         blocks[headNullX, j] = blocks[i, j];
                         blocks[i, j] = null;
 
-
+                        finalX = headNullX;
                         float x = blocks[headNullX, j].transform.position.x;
                         float y = blocks[headNullX, j].transform.position.y;
                         float z = blocks[headNullX, j].transform.position.z;
@@ -170,10 +175,20 @@ public class Grid : MonoBehaviour
                         x = headNullX - 1.5f;
                         blocks[headNullX, j].transform.position = new Vector3(x, y, z);
                         headNullX = headNullX + 1;
-
-
                         Movement = true;
+                        
+                        
 
+                    }
+                    if (finalX > 0)
+                    {
+                        if(blocks[finalX, j].number.value == blocks[finalX - 1, j].number.value)
+                        {
+                            Destroy(blocks[finalX, j].gameObject);
+                            blocks[finalX, j] = null;
+                            headNullX = finalX;
+                            blocks[finalX - 1, j].number.value *= 2;
+                        }
                     }
 
 
